@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../ctrBindHelper.js"></script>
+</head>
+
+<body>
+    <select id="testSelect"></select>
+    <select name="" id="selectCb"></select>
+    <div id="custCtrl"></div>
+    <ul id="lt1"></ul>
+    <ul id="lt2"></ul>
+    <script>
+        $(function () {
+            var option = {
+                el: '#testSelect',
+                bindType: 'selectBind',
+                dataSource: ['please select', '1', '2', '3', '4', '5']
+            };
+
+            $ctrBindHelper(option).bindData();
+
+            //添加回调
+            var option1 = {
+                el: '#selectCb',
+                bindType: 'selectBind',
+                dataSource: ['please select', '1', '2', '3', '4', '5'],
+                changeCb: function (e) {
+                    console.log(e.target.value);
+                }
+            };
+
+            $ctrBindHelper(option1).bindData();
+
+            //动态添加自定义绑定类型
+            var option2 = {
+                el: '#custCtrl',
+                bindType: 'cust'
+            };
+
+            var bind = $ctrBindHelper(option2).addBindType('cust', function (opt) {
+                $(opt.el).text('hello world ' + opt.bindType);
+            }).bindData();
+
+            //多值同时绑定
+
+            var option3 = {
+                el: '#lt1',
+                bindType: 'listBind',
+                dataSource: ['please select', '1', '2', '3', '4', '5']
+            };
+
+            var option4 = {
+                el: '#lt2',
+                bindType: 'listBind',
+                dataSource: ['please select', '6', '7', '8', '9', '10']
+            };
+
+            $ctrBindHelper([option3,option4]).bindAll();
+        });
+    </script>
+</body>
+
+</html>

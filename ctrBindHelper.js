@@ -2,12 +2,22 @@
  * @module CtrlBind
  * @description 提供数据控件绑定的统一方法 
  * @author Seven Chen
- * @version 1.0.0
+ * @version 2.0.0
  */
-(function (global) {
+
+(function (global,factory) {
+    if(typeof define === 'function' && define.amd){
+        define('$ctrBindHelper',['jquery'],factory);
+    }else if(typeof exports === 'object'){
+        module.exports = factory(require('jquery'));
+    }else{
+        global.$ctrBindHelper = factory(global.jQuery);
+    }
+
+})(window,function($){
     'use strict';
 
-    if (!global.$) throw 'Jquery is required!';
+    if (!$) throw 'Jquery is required!';
     //if (!global.$commonHelper) throw 'CommonHelper is required!'; // depreted
 
     /**
@@ -16,11 +26,7 @@
      * @method $ctrBindHelper
      * @param {object} option = {el:your_elem_id,bindType: your_bind_type, dataSourc:dataSource{value,text}}
      */
-    global.$ctrBindHelper = function $ctrBindHelper(option) {
-        /**
-         * @function
-         */
-        return function (option) {
+    return function $ctrBindHelper(option) {
             /**
              * @module CtrlBind
              * @constructor
@@ -345,10 +351,9 @@
                 return new CtrlBind(option);
             }
             return this;
-        }(option);
-    };
+        }
 
-})(window);
+});
 
 /**
  * @description test
